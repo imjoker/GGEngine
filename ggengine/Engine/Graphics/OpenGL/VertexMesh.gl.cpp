@@ -117,9 +117,6 @@ eae6320::cResult eae6320::Graphics::VertexMesh::InitializeGeometry(tGeomertryIni
 
 	// Assign the data to index buffer
 	{
-		// convert the existing data to Right Handed coordinate system.
-		ConvertLeftHandedToRightHanded(pInitData.indexData, pInitData.numIndexes);
-
 		const GLsizei bufferSize = sizeof(pInitData.indexData[0]) * pInitData.numIndexes;
 		EAE6320_ASSERT(bufferSize <= std::numeric_limits<GLsizeiptr>::max());
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLsizeiptr>(bufferSize), reinterpret_cast<GLvoid*>(pInitData.indexData),

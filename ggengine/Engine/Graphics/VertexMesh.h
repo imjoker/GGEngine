@@ -12,6 +12,8 @@
 
 #include <Engine/Results/Results.h>
 #include <Engine/Assets/ReferenceCountedAssets.h>
+#include <External/Lua/Includes.h>
+#include <string>
 
 
 namespace eae6320
@@ -36,19 +38,25 @@ namespace eae6320
 
 				EAE6320_ASSETS_DECLAREREFERENCECOUNTINGFUNCTIONS()
 
-				static cResult		Load							(tGeomertryInitData& pInitData, VertexMesh*& o_Mesh);
+				static Graphics::VertexMesh*	CreateMeshFromFile				(const std::string& pFilePath);
 
-				void				DrawGeometry					();
+				static cResult					Load							(tGeomertryInitData& pInitData, VertexMesh*& o_Mesh);
+
+				void							DrawGeometry					();
 
 			private:
 
-				eae6320::cResult	InitializeGeometry				(tGeomertryInitData & pInitData);
-				void				CleanUp							(eae6320::cResult& pResult);
+				eae6320::cResult				InitializeGeometry				(tGeomertryInitData & pInitData);
+				void							CleanUp							(eae6320::cResult& pResult);
+
+				static cResult					LoadLuaFile						(const std::string& pFilePath, lua_State*& pLuaState);
+				static cResult					LoadVerticesFromTable			(lua_State& io_luaState, VertexFormats::sVertex_mesh*& o_Vertices, uint16_t& pNumVertices);
+				static cResult					LoadIndicesFromTable			(lua_State& io_luaState, uint16_t*& o_Indices, uint16_t& pNumIndices);
 
 				VertexMesh() = default;
 				~VertexMesh();
 
-	constexpr	void				ConvertLeftHandedToRightHanded	(uint16_t* indexBuffer, uint16_t pNumIndexes);
+	constexpr	void							ConvertRightHandedToLeftHanded (tGeomertryInitData & pGeometryData);
 
 			// Geometry Data
 			//--------------
@@ -77,14 +85,18 @@ namespace eae6320
 	}
 }
 
-constexpr void eae6320::Graphics::VertexMesh::ConvertLeftHandedToRightHanded(uint16_t* indexBuffer, uint16_t pNumIndexes)
+constexpr void eae6320::Graphics::VertexMesh::ConvertRightHandedToLeftHanded (tGeomertryInitData& pGeometryData)
 {
-	for (uint16_t i = 0; i < pNumIndexes; i += 3) {
+	for (uint16_t i = 0; i < pGeometryData.numVertices; ++i)
+		pGeometryData.vertexData[i].z = -pGeometryData.vertexData[i].z;
 
-		uint16_t temp = indexBuffer[i + 1];
-		indexBuffer[i + 1] = indexBuffer[i + 2];
-		indexBuffer[i + 2] = temp;
+	for (uint16_t i = 0; i < pGeometryData.numIndexes; i += 3) {
+
+		uint16_t temp = pGeometryData.indexData[i + 1];
+		pGeometryData.indexData[i + 1] = pGeometryData.indexData[i + 2];
+		pGeometryData.indexData[i + 2] = temp;
 	}
 }
+
 
 #endif

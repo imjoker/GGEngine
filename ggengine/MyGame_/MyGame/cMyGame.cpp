@@ -104,90 +104,52 @@ eae6320::cResult eae6320::cMyGame::Initialize()
 			EAE6320_ASSERTF(false, "Can't initialize Graphics without the shading data");
 			return result;
 		}
+		if (!(result = eae6320::Graphics::cEffect::Load("data/Shaders/Vertex/standard.shader", "data/Shaders/Fragment/sample2.shader", MeshEffectPairs[2].effect)))
+		{
+			EAE6320_ASSERTF(false, "Can't initialize Graphics without the shading data");
+			return result;
+		}
 	}
 
 	// Initialize the geometry
 	{
 		// 1st mesh
-		Graphics::tGeomertryInitData MeshInitData;
+		MeshEffectPairs[0].mesh = Graphics::VertexMesh::CreateMeshFromFile("data/meshes/ring.mesh");
 
-		// left handed data
-		eae6320::Graphics::VertexFormats::sVertex_mesh vertexData[]{
-
-			vertexData[0].x = 0.0f,
-			vertexData[0].y = 0.0f,
-			vertexData[0].z = 0.0f,
-
-			vertexData[1].x = 0.0f,
-			vertexData[1].y = 1.0f,
-			vertexData[1].z = 0.0f,
-
-			vertexData[2].x = 1.0f,
-			vertexData[2].y = 1.0f,
-			vertexData[2].z = 0.0f,
-		};
-
-		MeshInitData.vertexData = vertexData;
-		MeshInitData.numVertices = sizeof(vertexData) / sizeof(vertexData[0]);
-
-		uint16_t indexData[]{ 0, 1, 2 };
-
-		MeshInitData.indexData = indexData;
-		MeshInitData.numIndexes = sizeof(indexData) / sizeof(indexData[0]);
-
-		if (!(result = eae6320::Graphics::VertexMesh::Load(MeshInitData, MeshEffectPairs[0].mesh)))
+		if (!MeshEffectPairs[0].mesh)
 		{
 			EAE6320_ASSERTF(false, "Can't initialize Graphics without the geometry data");
-			return result;
+			return eae6320::Results::Failure;
 		}
 	}
 	{
-
 		// 2nd mesh
-		Graphics::tGeomertryInitData MeshInitData;
+		MeshEffectPairs[1].mesh = Graphics::VertexMesh::CreateMeshFromFile("data/meshes/cone.mesh");
 
-		// left handed data
-		eae6320::Graphics::VertexFormats::sVertex_mesh vertexData2[]{
-
-			vertexData2[0].x = 0.0f,
-			vertexData2[0].y = 0.0f,
-			vertexData2[0].z = 0.0f,
-
-			vertexData2[1].x = 1.0f,
-			vertexData2[1].y = 1.0f,
-			vertexData2[1].z = 0.0f,
-
-			vertexData2[2].x = 1.0f,
-			vertexData2[2].y = 0.0f,
-			vertexData2[2].z = 0.0f,
-		};
-
-		MeshInitData.vertexData = vertexData2;
-		MeshInitData.numVertices = sizeof(vertexData2) / sizeof(vertexData2[0]);
-
-		uint16_t indexData2[]{ 0, 1, 2 };
-
-		MeshInitData.indexData = indexData2;
-		MeshInitData.numIndexes = sizeof(indexData2) / sizeof(indexData2[0]);
-
-		if (!(result = eae6320::Graphics::VertexMesh::Load(MeshInitData, MeshEffectPairs[1].mesh)))
+		if (!MeshEffectPairs[1].mesh)
 		{
 			EAE6320_ASSERTF(false, "Can't initialize Graphics without the geometry data");
-			return result;
+			return eae6320::Results::Failure;
+		}
+	}
+	{
+		// 3rd mesh
+		MeshEffectPairs[2].mesh = Graphics::VertexMesh::CreateMeshFromFile("data/meshes/ball.mesh");
+
+		if (!MeshEffectPairs[2].mesh)
+		{
+			EAE6320_ASSERTF(false, "Can't initialize Graphics without the geometry data");
+			return eae6320::Results::Failure;
 		}
 	}
 
 	activeGameObjects.reserve(10);
 
 	eae6320::Assets::GameObject* player = new eae6320::Assets::GameObject(MeshEffectPairs[0].mesh, MeshEffectPairs[0].effect, Physics::sRigidBodyState());
-	
+	eae6320::Assets::GameObject* ball = new eae6320::Assets::GameObject(MeshEffectPairs[2].mesh, MeshEffectPairs[2].effect, Physics::sRigidBodyState());
+
 	activeGameObjects.push_back(player);
-	
-	//if (!(result = Assets::Camera::Load(camera)))
-	//{
-	//	EAE6320_ASSERTF(false, "Unable to load camera");
-	//	return result;
-	//}
+	activeGameObjects.push_back(ball);
 
 	return Results::Success;
 }
@@ -228,6 +190,8 @@ void eae6320::cMyGame::SubmitDataToBeRendered(const float i_elapsedSecondCount_s
 		renderableObjects[i].mesh = currObj->GetMesh();
 		renderableObjects[i].effect = currObj->GetEffect();
 		renderableObjects[i].drawData.g_transform_localToWorld = currObj->GetTransformLocalToWorld(i_elapsedSecondCount_sinceLastSimulationUpdate);
+
+		++i;
 	}
 
 	switch (PressedKeyCode) {

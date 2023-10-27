@@ -12,4 +12,8 @@ return
 		{ path = "Shaders/Vertex/standard.shader", arguments = { "vertex" } },
 		{ path = "Shaders/Fragment/sample2.shader", arguments = { "fragment" } },	
 	},
+	meshes =
+	{
+		"Meshes/ball.mesh", "Meshes/cone.mesh", "Meshes/floor.mesh", "Meshes/ring.mesh",
+	},
 }

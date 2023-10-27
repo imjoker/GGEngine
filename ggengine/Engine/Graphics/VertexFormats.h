@@ -36,6 +36,13 @@ namespace eae6320
 			// and more complex and bigger formats for more complicated shading).
 			struct sVertex_mesh
 			{
+				void operator = (float pVertices[3])
+				{
+					x = pVertices[0];
+					y = pVertices[1];
+					z = pVertices[2];
+				}
+
 				// POSITION
 				// 3 floats == 12 bytes
 				// Offset = 0

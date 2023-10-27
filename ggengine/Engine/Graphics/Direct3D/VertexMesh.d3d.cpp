@@ -18,10 +18,13 @@ eae6320::cResult eae6320::Graphics::VertexMesh::InitializeGeometry (tGeomertryIn
 
 	numIndexes = pInitData.numIndexes;
 
+	// convert the existing data to Left Handed coordinate system.
+	ConvertRightHandedToLeftHanded(pInitData);
+
 	// Vertex Format
 	{
 		if (!(result = eae6320::Graphics::cVertexFormat::Load(eae6320::Graphics::eVertexType::Mesh, s_vertexFormat,
-			"data/Shaders/Vertex/vertexInputLayout_mesh.shader")))
+			"data/Shaders/Vertex/standard.shader")))
 		{
 			EAE6320_ASSERTF(false, "Can't initialize geometry without vertex format");
 			return result;
@@ -66,6 +69,7 @@ eae6320::cResult eae6320::Graphics::VertexMesh::InitializeGeometry (tGeomertryIn
 	}
 
 	{
+
 		const auto bufferSize = sizeof(pInitData.indexData[0]) * pInitData.numIndexes;
 		EAE6320_ASSERT(bufferSize <= std::numeric_limits<decltype(D3D11_BUFFER_DESC::ByteWidth)>::max());
 		const auto bufferDescription = [bufferSize]

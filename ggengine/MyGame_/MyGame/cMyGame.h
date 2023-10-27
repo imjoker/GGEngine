@@ -91,7 +91,7 @@ namespace eae6320
 		
 		// Mesh Effect Data
 		//--------------
-		static constexpr uint16_t numMeshEffectPairs = 2;
+		static constexpr uint16_t numMeshEffectPairs = 3;
 		static constexpr float	  playerVelocity = 1.0f;
 
 		eae6320::Graphics::MeshEffectData MeshEffectPairs[numMeshEffectPairs];

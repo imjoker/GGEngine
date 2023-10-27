@@ -46,6 +46,9 @@
     <ProjectReference Include="..\..\Engine\Assets\Assets.vcxproj">
       <Project>{e803347f-34d1-43ac-b234-5f8940fab26a}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\Engine\Graphics\Graphics.vcxproj">
+      <Project>{ac5ff67a-b412-4c86-94d9-a604e8351bfb}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\Engine\Logging\Logging.vcxproj">
       <Project>{a5c152ad-26a3-4835-bb10-ef292daf94ac}</Project>
     </ProjectReference>
