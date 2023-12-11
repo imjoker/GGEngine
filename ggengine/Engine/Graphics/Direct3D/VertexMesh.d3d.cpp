@@ -33,7 +33,15 @@ eae6320::cResult eae6320::Graphics::VertexMesh::InitializeGeometry (tGeomertryIn
 	// Vertex Buffer
 	{
 		const auto bufferSize = sizeof(pInitData.vertexData[0]) * pInitData.numVertices;
-		EAE6320_ASSERT(bufferSize <= std::numeric_limits<decltype(D3D11_BUFFER_DESC::ByteWidth)>::max());
+
+		if (bufferSize >= std::numeric_limits<decltype(D3D11_BUFFER_DESC::ByteWidth)>::max()) {
+			
+			result = eae6320::Results::Failure;
+			EAE6320_ASSERTF(false, "Too many vertices");
+			eae6320::Logging::OutputError("Direct3D failed to create a 3D object vertex buffer due to too many vertex count");
+			return result;
+		}
+
 		const auto bufferDescription = [bufferSize]
 		{
 			D3D11_BUFFER_DESC bufferDescription{};

@@ -145,11 +145,11 @@ eae6320::cResult eae6320::cMyGame::Initialize()
 
 	activeGameObjects.reserve(10);
 
-	eae6320::Assets::GameObject* player = new eae6320::Assets::GameObject(MeshEffectPairs[0].mesh, MeshEffectPairs[0].effect, Physics::sRigidBodyState());
-	eae6320::Assets::GameObject* ball = new eae6320::Assets::GameObject(MeshEffectPairs[2].mesh, MeshEffectPairs[2].effect, Physics::sRigidBodyState());
+	player = new eae6320::Assets::GameObject(MeshEffectPairs[0].mesh, MeshEffectPairs[0].effect, Physics::sRigidBodyState());
+	npc = new eae6320::Assets::GameObject(MeshEffectPairs[2].mesh, MeshEffectPairs[2].effect, Physics::sRigidBodyState());
 
 	activeGameObjects.push_back(player);
-	activeGameObjects.push_back(ball);
+	activeGameObjects.push_back(npc);
 
 	return Results::Success;
 }

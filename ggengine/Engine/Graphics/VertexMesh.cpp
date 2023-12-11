@@ -108,29 +108,27 @@ eae6320::cResult eae6320::Graphics::VertexMesh::Load(tGeomertryInitData& pInitDa
 {
 	auto result = Results::Success;
 
-	VertexMesh* newMesh = nullptr;
-	cScopeGuard scopeGuard([&o_Mesh, &result, &pInitData, &newMesh]
+	o_Mesh = nullptr;
+	cScopeGuard scopeGuard([&o_Mesh, &result, &pInitData]
 	{
 		if (result)
 		{
-			EAE6320_ASSERT(newMesh != nullptr);
-			o_Mesh = newMesh;
+			EAE6320_ASSERT(o_Mesh != nullptr);
 		}
 		else
 		{
-			if (newMesh)
+			if (o_Mesh)
 			{
-				newMesh->DecrementReferenceCount();
-				newMesh = nullptr;
+				o_Mesh->DecrementReferenceCount();
+				o_Mesh = nullptr;
 			}
-			o_Mesh = nullptr;
 		}
 	});
 
 	// Allocate a mesh
 	{
-		newMesh = new (std::nothrow) VertexMesh();
-		if (!newMesh)
+		o_Mesh = new (std::nothrow) VertexMesh();
+		if (!o_Mesh)
 		{
 			result = Results::OutOfMemory;
 			EAE6320_ASSERTF(false, "Couldn't allocate memory for the mesh");
@@ -140,7 +138,9 @@ eae6320::cResult eae6320::Graphics::VertexMesh::Load(tGeomertryInitData& pInitDa
 	}
 
 	// Initialize the platform-specific graphics API mesh geometry
-	if (!(result = newMesh->InitializeGeometry(pInitData)))
+	result = o_Mesh->InitializeGeometry(pInitData);
+
+	if (!result)
 	{
 		EAE6320_ASSERTF(false, "Initialization of new mesh failed");
 		return result;

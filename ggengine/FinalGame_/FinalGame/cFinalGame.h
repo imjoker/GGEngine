@@ -10,6 +10,7 @@
 
 #include <Engine/Application/iApplication.h>
 #include <Engine/Results/Results.h>
+#include <Engine/Math/sVector.h>
 #include <Engine/Graphics/Graphics.h>
 #include <Engine/UserInput/UserInput.h>
 #include <Engine/Assets/Camera.h>
@@ -26,7 +27,19 @@
 
 namespace eae6320
 {
-	class cMyGame final : public Application::iApplication
+	class Player final : public Assets::GameObject
+	{
+	public:
+
+		Player(Graphics::VertexMesh* pMesh, Graphics::cEffect* pEffect, Math::sVector pPosition, Math::sVector pColliderExtents) : Assets::GameObject(pMesh, pEffect, pPosition, pColliderExtents) {}
+		~Player () {}
+
+		void OnCollisionEnter(ChrisZ::Physics::Collider* other) override { if (other->GetGameObject()->GetRigidBody()->GetAngularVelocity() == Math::sVector()) isDead = true; }
+
+		bool isDead = false;
+	};
+
+	class cFinalGame final : public Application::iApplication
 	{
 		// Inherited Implementation
 		//=========================
@@ -42,7 +55,7 @@ namespace eae6320
 		// so that it's easy to tell at a glance what kind of build is running.
 		const char* GetMainWindowName() const final
 		{
-			return "Yesh's EAE6320 Example Game"
+			return "Yesh's EAE6320 Final Game"
 				" -- "
 #if defined( EAE6320_PLATFORM_D3D )
 				"Direct3D"
@@ -93,15 +106,17 @@ namespace eae6320
 		
 		// Mesh Effect Data
 		//--------------
-		static constexpr uint16_t   numMeshEffectPairs = 3;
-		static constexpr float	    playerVelocity = 1.0f;
+		static constexpr uint16_t					numMeshEffectPairs = 6;
 
-		eae6320::Graphics::MeshEffectData MeshEffectPairs[numMeshEffectPairs];
-		eae6320::Assets::Camera camera{};
-		std::vector<eae6320::Assets::GameObject*> activeGameObjects;
-		eae6320::Assets::GameObject* player;
-		eae6320::Assets::GameObject* npc;
-		eae6320::UserInput::KeyCodes::eKeyCodes PressedKeyCode;
+		eae6320::Graphics::MeshEffectData			MeshEffectPairs[numMeshEffectPairs];
+		eae6320::Assets::Camera						camera{};
+		std::vector<eae6320::Assets::GameObject*>	activeGameObjects;
+		eae6320::Assets::GameObject*				player = nullptr;
+		eae6320::Assets::GameObject*				npc = nullptr;
+		eae6320::Assets::GameObject*				rotator;	
+		Math::sVector								playerVelocity;
+		Math::sVector								currentNPCTargetLoc;
+		std::vector<PathFinding::Node*>				path;
 	};
 }
 

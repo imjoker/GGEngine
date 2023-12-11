@@ -42,6 +42,7 @@ constexpr float eae6320::Math::Dot( const cQuaternion& i_lhs, const cQuaternion&
 	return ( i_lhs.m_w * i_rhs.m_w ) + ( i_lhs.m_x * i_rhs.m_x ) + ( i_lhs.m_y * i_rhs.m_y ) + ( i_lhs.m_z * i_rhs.m_z );
 }
 
+
 // Inversion
 //----------
 

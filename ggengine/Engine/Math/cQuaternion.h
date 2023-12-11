@@ -5,6 +5,8 @@
 #ifndef EAE6320_MATH_CQUATERNION_H
 #define EAE6320_MATH_CQUATERNION_H
 
+#include <cmath>
+
 // Forward Declarations
 //=====================
 
@@ -67,6 +69,12 @@ namespace eae6320
 			cQuaternion( const float i_angleInRadians,	// A positive angle rotates counter-clockwise (right-handed) around the axis
 				const sVector i_axisOfRotation_normalized );
 
+
+			// Initialization / Clean Up
+			//--------------------------
+
+			constexpr cQuaternion(const float i_w, const float i_x, const float i_y, const float i_z);
+
 			// Data
 			//=====
 
@@ -80,12 +88,7 @@ namespace eae6320
 			// Implementation
 			//===============
 
-		private:
 
-			// Initialization / Clean Up
-			//--------------------------
-
-			constexpr cQuaternion( const float i_w, const float i_x, const float i_y, const float i_z );
 
 			// Friends
 			//========

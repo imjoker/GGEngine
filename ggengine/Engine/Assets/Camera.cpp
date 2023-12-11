@@ -5,9 +5,9 @@
 
 eae6320::Assets::Camera::Camera() noexcept
 {
-	rigidBody.position.x = 0.0f;
-	rigidBody.position.y = 0.0f;
-	rigidBody.position.z = 10.0f;
+	rigidBody.position.x = 100.0f;
+	rigidBody.position.y = 100.0f;
+	rigidBody.position.z = 140.0f;
 }
 
 eae6320::Assets::Camera::~Camera() noexcept
@@ -34,41 +34,3 @@ eae6320::Math::cMatrix_transformation eae6320::Assets::Camera::CreateCameraToPro
 {
 	return eae6320::Math::cMatrix_transformation::CreateCameraToProjectedTransform_perspective(Math::ConvertHorizontalFieldOfViewToVerticalFieldOfView(eae6320::Math::ConvertDegreesToRadians(80), 1.0f), 1.0f, 0.1f, 100.0f);
 }
-
-	//cResult Camera::Load(Camera*& o_Camera)
-	//{
-	//	auto result = Results::Success;
-
-	//	Camera* newCamera = nullptr;
-	//	cScopeGuard scopeGuard([&o_Camera, &result, &newCamera]
-	//		{
-	//			if (result)
-	//			{
-	//				EAE6320_ASSERT(newMesh != nullptr);
-	//				o_Camera = newCamera;
-	//			}
-	//			else
-	//			{
-	//				if (newCamera)
-	//				{
-	//					newCamera->DecrementReferenceCount();
-	//					newCamera = nullptr;
-	//				}
-	//				o_Camera = nullptr;
-	//			}
-	//		});
-
-	//	// Allocate a camera
-	//	{
-	//		newCamera = new (std::nothrow) Camera();
-	//		if (!newCamera)
-	//		{
-	//			result = Results::OutOfMemory;
-	//			EAE6320_ASSERTF(false, "Couldn't allocate memory for the camera");
-	//			Logging::OutputError("Failed to allocate memory for the camera");
-	//			return result;
-	//		}
-	//	}
-
-	//	return result;
-	//}

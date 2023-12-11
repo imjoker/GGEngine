@@ -31,7 +31,7 @@ eae6320::Graphics::cConstantBuffer s_constantBuffer_draw(eae6320::Graphics::Cons
 // it must cache whatever is necessary in order to render a frame
 struct sDataRequiredToRenderAFrame
 {
-	static constexpr unsigned int numPairsBudgeted = 10;
+	static constexpr unsigned int numPairsBudgeted = 20;
 
 	eae6320::Graphics::ObjectRenderData Renderables[numPairsBudgeted]{};
 	eae6320::Graphics::ConstantBufferFormats::sFrame constantData_frame;

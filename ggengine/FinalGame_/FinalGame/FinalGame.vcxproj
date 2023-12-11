@@ -25,15 +25,15 @@
     <Image Include="Resource Files\vsDefault_small.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Resource Files\MyGame.rc" />
+    <ResourceCompile Include="Resource Files\FinalGame.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cMyGame.h" />
+    <ClInclude Include="cFinalGame.h" />
     <ClInclude Include="Resource Files\Resource.h" />
     <ClInclude Include="Resource Files\targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cMyGame.cpp" />
+    <ClCompile Include="cFinalGame.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +45,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\Assets\Assets.vcxproj">
       <Project>{e803347f-34d1-43ac-b234-5f8940fab26a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\CZPhysics\CZPhysics.vcxproj">
+      <Project>{ad6abc8f-041a-420a-8ae1-b419868fbf7c}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\Graphics\Graphics.vcxproj">
       <Project>{ac5ff67a-b412-4c86-94d9-a604e8351bfb}</Project>
@@ -67,9 +70,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{1fe34aa6-df27-49f6-86d1-249e56985ff5}</ProjectGuid>
+    <ProjectGuid>{8f93eabd-bf93-40b7-b619-30011a8129c1}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>MyGame</RootNamespace>
+    <RootNamespace>FinalGame</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -108,25 +111,25 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\..\Engine\EngineDefaults.props" />
     <Import Project="..\..\Engine\OpenGL.props" />
-    <Import Project="..\MyGame.props" />
+    <Import Project="..\FinalGame.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\..\Engine\EngineDefaults.props" />
     <Import Project="..\..\Engine\OpenGL.props" />
-    <Import Project="..\MyGame.props" />
+    <Import Project="..\FinalGame.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\..\Engine\EngineDefaults.props" />
     <Import Project="..\..\Engine\Direct3D.props" />
-    <Import Project="..\MyGame.props" />
+    <Import Project="..\FinalGame.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\..\Engine\EngineDefaults.props" />
     <Import Project="..\..\Engine\Direct3D.props" />
-    <Import Project="..\MyGame.props" />
+    <Import Project="..\FinalGame.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
